@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { CertificateGuard } from './guards/certificate.guard';
 import * as dotenv from 'dotenv';
 
 // Load environment variables before anything else
@@ -21,6 +22,8 @@ async function bootstrap() {
     credentials: true,
   });
 
+  app.useGlobalGuards(new CertificateGuard());
+  
   await app.listen(process.env.PORT || 3000, '0.0.0.0');
 }
 bootstrap();
